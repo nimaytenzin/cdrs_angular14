@@ -1,267 +1,200 @@
-<div class="h-screen flex flex-col w-full overflow-y-scroll" style="width:100vw">
+<div
+  class="h-screen flex flex-col w-full overflow-y-scroll"
+  style="width: 100vw"
+>
+  <div
+    id="roadDetails"
+    class="m-1 shadow-lg p-4 rounded font-normal font-mono text-gray-600 text-xs leading-relaxed tracking-wide"
+  >
+    <div class="flex justify-between my-1">
+      <p>
+        FeatureID: <strong> {{ roadFeatureId }} </strong>
+      </p>
+    </div>
+    <p>Road Class <strong>NA</strong></p>
 
-    <div id="roadDetails"
-        class="m-1 shadow-lg p-4 rounded font-normal font-mono text-gray-600 text-xs leading-relaxed tracking-wide ">
-        <div class="flex justify-between my-1">
-            <p>
-                FeatureID: <strong> {{ roadFeatureId  }} </strong>
-            </p>
-        </div>
-        <p>
-            Road Class <strong>NA</strong>
+    <div class="shadow-md p-2 rounded">
+      <p>* Reference TrashiYangtse Structure Plan</p>
+      <table class="w-full table-auto text-xs">
+        <tr>
+          <td class="px-2">Class</td>
+          <td class="px-2">Max Lanes</td>
+          <td class="px-2">Carriage Way</td>
+        </tr>
+        <tr>
+          <td class="px-2">Primaray</td>
+          <td class="px-2">4</td>
+          <td class="px-2">12 m</td>
+        </tr>
+        <tr>
+          <td class="px-2">Secondary</td>
+          <td class="px-2">2</td>
+          <td class="px-2">6 m</td>
+        </tr>
+        <tr>
+          <td class="px-2">Access</td>
+          <td class="px-2">1</td>
+          <td class="px-2">3.5</td>
+        </tr>
+      </table>
+      <p>Footpath :1.2m & Drain 0.3 m</p>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-col justify-center my-4 text-sm p-6"
+    *ngIf="detailsAdded"
+  >
+    <button class="bg-green-500 text-white p-2 rounded" (click)="takePhoto()">
+      Take Photographic Evidence
+    </button>
+
+    <div class="flex overflow-x-scroll mt-4 gap-4">
+      <img
+        *ngFor="let image of images"
+        src="http://cdrss.ddnsfree.com/{{ image.uri }}"
+        style="height: 150px; width: auto"
+      />
+    </div>
+  </div>
+
+  <div id="formContainer" class="w-full mt-2 p-4 text-sm">
+    <form [formGroup]="editRoadForm">
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">
+          Development Status
         </p>
-
-        <div class="shadow-md p-2 rounded">
-            <p>
-                * Reference TrashiYangtse Structure Plan
-            </p>
-            <table class="w-full table-auto text-xs ">
-                <tr>
-                    <td class="px-2">Class</td>
-                    <td class="px-2">Max Lanes</td>
-                    <td class="px-2">Carriage Way</td>
-                </tr>
-                <tr>
-                    <td class="px-2">Primaray</td>
-                    <td class="px-2">4</td>
-                    <td class="px-2">12 m</td>
-                </tr>
-                <tr>
-                    <td class="px-2">Secondary</td>
-                    <td class="px-2">2</td>
-                    <td class="px-2">6 m</td>
-                </tr>
-                <tr>
-                    <td class="px-2">Access</td>
-                    <td class="px-2">1</td>
-                    <td class="px-2">3.5</td>
-                </tr>
-            </table>
-            <p>
-                Footpath :1.2m & Drain 0.3 m
-            </p>
+        <div class="w-full rounded-lg">
+          <select
+            formControlName="developmentStatus"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          >
+            <option
+              *ngFor="let status of developmentstatuses"
+              [value]="status"
+              class="w-full"
+            >
+              {{ status }}
+            </option>
+          </select>
         </div>
+      </div>
 
-    </div>
-
-    <div class="flex flex-col justify-center my-4 text-sm p-6" *ngIf="detailsAdded">
-        <button class=" bg-green-500 text-white p-2 rounded" (click)="takePhoto()" >
-            Take Photographic Evidence
-        </button>
-        
-        <div class="flex overflow-x-scroll mt-4 gap-4">
-            <img *ngFor="let image of images"  src='http://202.144.157.89:4200/{{image.uri}}'  style="height: 150px;width:auto">
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Traffic Flow</p>
+        <div class="w-full rounded-lg">
+          <select
+            formControlName="trafficFlow"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          >
+            <option
+              *ngFor="let direction of trafficFlow"
+              [value]="direction"
+              class="w-full"
+            >
+              {{ direction }}
+            </option>
+          </select>
         </div>
-    </div>
+      </div>
 
-    <div id="formContainer" class="w-full mt-2 p-4 text-sm">
-        <form [formGroup]="editRoadForm">
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Development Status
-                </p>
-                <div class="w-full rounded-lg">
-                    <select formControlName="developmentStatus" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        ">
-                        <option *ngFor="let status of developmentstatuses" [value]="status" class="w-full">
-                            {{ status }}
-                        </option>
-                    </select>
-                </div>
-            </div>
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Lanes</p>
+        <div class="w-full rounded-lg">
+          <select
+            formControlName="lanes"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
 
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Traffic Flow
-                </p>
-                <div class="w-full rounded-lg">
-                    <select formControlName="trafficFlow" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        ">
-                        <option *ngFor="let direction of trafficFlow" [value]="direction" class="w-full">
-                            {{ direction }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Lanes
-                </p>
-                <div class="w-full rounded-lg">
-                    <select formControlName="lanes" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        ">
-                        <option value="1">
-                            1
-                        </option>
-                        <option value="2">
-                            2
-                        </option>
-                        <option value="3">
-                            3
-                        </option>
-
-                        <option value="4">
-                            4
-                        </option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    CarriageWidth
-                </p>
-                <div class="w-full rounded-lg">
-                    <input type="number" formControlName="carriageWidth" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        " />
-                </div>
-            </div>
-
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Footpath Left
-                </p>
-                <div class="w-full rounded-lg">
-                    <input type="number" formControlName="footpathLeft" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        " />
-                </div>
-            </div>
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Footpath Right
-                </p>
-                <div class="w-full rounded-lg">
-                    <input type="number" formControlName="footpathRight" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        " />
-                </div>
-            </div>
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Drains left
-                </p>
-                <div class="w-full rounded-lg">
-                    <input type="number" formControlName="drainsLeft" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        " />
-                </div>
-            </div>
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Drains Right
-                </p>
-                <div class="w-full rounded-lg">
-                    <input type="number" formControlName="drainsRight" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        " />
-                </div>
-            </div>
-
-            <div class="my-2">
-                <p class="text-sm mb-2 text-gray-700 text-left w-full">
-                    Remarks
-                </p>
-                <div class="w-full rounded-lg">
-                    <textarea formControlName="remarks" placeholder="Metalled or Unmetalled?" cols="10" class="
-                        w-full
-                        bg-gray-50
-                        border border-gray-300
-                        text-gray-900
-                        rounded
-                        p-2
-                        focus:outline-none
-                        focus:ring-blue-300
-                        focus:border-blue-300
-                        "></textarea>
-                </div>
-            </div>
-
-
-
-
-        </form>
-        <div class="flex w-full gap-2 mt-4">
-            <button class=" w-1/2 bg-green-500 text-white p-2 rounded" (click)="saveData()">
-                Save
-            </button>
-            <button class=" w-1/2 bg-gray-300 text-gray-400 p-2 rounded" (click)="goBackToMap()">
-                Back To Map
-            </button>
+            <option value="4">4</option>
+          </select>
         </div>
+      </div>
+
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">CarriageWidth</p>
+        <div class="w-full rounded-lg">
+          <input
+            type="number"
+            formControlName="carriageWidth"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          />
+        </div>
+      </div>
+
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Footpath Left</p>
+        <div class="w-full rounded-lg">
+          <input
+            type="number"
+            formControlName="footpathLeft"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          />
+        </div>
+      </div>
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">
+          Footpath Right
+        </p>
+        <div class="w-full rounded-lg">
+          <input
+            type="number"
+            formControlName="footpathRight"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          />
+        </div>
+      </div>
+
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Drains left</p>
+        <div class="w-full rounded-lg">
+          <input
+            type="number"
+            formControlName="drainsLeft"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          />
+        </div>
+      </div>
+
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Drains Right</p>
+        <div class="w-full rounded-lg">
+          <input
+            type="number"
+            formControlName="drainsRight"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          />
+        </div>
+      </div>
+
+      <div class="my-2">
+        <p class="text-sm mb-2 text-gray-700 text-left w-full">Remarks</p>
+        <div class="w-full rounded-lg">
+          <textarea
+            formControlName="remarks"
+            placeholder="Metalled or Unmetalled?"
+            cols="10"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded p-2 focus:outline-none focus:ring-blue-300 focus:border-blue-300"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <div class="flex w-full gap-2 mt-4">
+      <button
+        class="w-1/2 bg-green-500 text-white p-2 rounded"
+        (click)="saveData()"
+      >
+        Save
+      </button>
+      <button
+        class="w-1/2 bg-gray-300 text-gray-400 p-2 rounded"
+        (click)="goBackToMap()"
+      >
+        Back To Map
+      </button>
     </div>
+  </div>
 </div>
