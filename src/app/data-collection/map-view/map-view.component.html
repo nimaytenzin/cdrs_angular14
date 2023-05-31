@@ -1,64 +1,76 @@
-<div class="w-full h-screen flex flex-col  relative">
-
-    <div id="map" class="z-10">
+<div class="w-full h-screen flex flex-col relative">
+  <div id="map" class="z-10"></div>
+  <div
+    class="absolute z-20 max-w-xl top-0 left-0 bg-white text-xs p-4 bg-opacity-80 rounded"
+  >
+    <div *ngFor="let item of selectedFeature | keyvalue">
+      {{ item.key }} - {{ item.value }}
     </div>
-    <div class="absolute z-20 top-0 left-0 bg-white text-xs p-4 bg-opacity-60 rounded">
+    <button
+      (click)="goToEdit()"
+      class="px-2 py-1 mt-4 rounded-md bg-green-500 text-gray-100 w-full"
+    >
+      Edit Feature
+    </button>
+  </div>
 
-        <div *ngFor="let item of selectedFeature | keyvalue">
-            {{item.key}} - {{item.value}}
-        </div>
-
-        <button (click)="goToEdit()" class="px-2 py-1 mt-4 rounded-md bg-green-500 text-gray-100 w-full">
-            Edit Feature
-        </button>
+  <div
+    class="flex flex-1 items-center justify-between"
+    style="background-color: #eef3ed"
+  >
+    <div
+      class="bottom-0 z-20 left-0 bg-green-600 rounded-full h-5 w-5 m-2 p-1 flex justify-center items-center text-white"
+      (click)="getLocation()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 fill-current"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        id="Capa_1"
+        x="0px"
+        y="0px"
+        viewBox="0 0 395.71 395.71"
+        style="enable-background: new 0 0 395.71 395.71"
+        xml:space="preserve"
+      >
+        <g>
+          <path
+            d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738   c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388   C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191   c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z"
+          />
+        </g>
+      </svg>
     </div>
-
-    <div class="flex  flex-1 items-center justify-between" style="background-color: #EEF3ED;">
-        <div class=" bottom-0 z-20 left-0 bg-green-600 rounded-full h-5 w-5 m-2 p-1 flex justify-center items-center text-white"
-            (click)="getLocation()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-current"
-                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
-                viewBox="0 0 395.71 395.71" style="enable-background:new 0 0 395.71 395.71;" xml:space="preserve">
-                <g>
-                    <path
-                        d="M197.849,0C122.131,0,60.531,61.609,60.531,137.329c0,72.887,124.591,243.177,129.896,250.388l4.951,6.738   c0.579,0.792,1.501,1.255,2.471,1.255c0.985,0,1.901-0.463,2.486-1.255l4.948-6.738c5.308-7.211,129.896-177.501,129.896-250.388   C335.179,61.609,273.569,0,197.849,0z M197.849,88.138c27.13,0,49.191,22.062,49.191,49.191c0,27.115-22.062,49.191-49.191,49.191   c-27.114,0-49.191-22.076-49.191-49.191C148.658,110.2,170.734,88.138,197.849,88.138z" />
-                </g>
+    <div class="z-20 bottom-0 right-0 text-xs">
+      <div class="w-">
+        <div class="w-full flex rounded-lg">
+          <select
+            class="w-full bg-gray-50 border-t border-l border-b border-gray-300 text-gray-900 rounded-l p-2 appearance-none focus:outline-none focus:ring-green-100 focus:border-green-100"
+            (change)="onFeatureTypeChange($event)"
+            [(ngModel)]="featureTypeSelected"
+          >
+            <option *ngFor="let type of types" [value]="type" class="w-full">
+              {{ type }}
+            </option>
+          </select>
+          <div
+            class="flex justify-center items-center rounded-r border-t border-b border-r border-gray-300 bg-gray-50"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
             </svg>
+          </div>
         </div>
-        <div class=" z-20 bottom-0 right-0 text-xs">
-            <div class="  w-">
-                <div class="w-full flex rounded-lg">
-                    <select class="
-                            w-full
-                            bg-gray-50
-                            border-t border-l border-b border-gray-300
-                            text-gray-900
-                            rounded-l
-                            p-2
-                            appearance-none
-                            focus:outline-none focus:ring-green-100 focus:border-green-100
-                        " 
-                            (change)="onFeatureTypeChange($event)" [(ngModel)]="featureTypeSelected">
-                        <option *ngFor="let type of types" [value]="type" class="w-full">
-                            {{ type}}
-                        </option>
-                    </select>
-                    <div class="
-                flex
-                justify-center
-                items-center
-                rounded-r
-                border-t border-b border-r border-gray-300
-                bg-gray-50
-              ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
